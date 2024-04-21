@@ -61,19 +61,19 @@ func (fr *FuncRegistry) split(orig, sep string) (values []string) {
 
 // LimitOffset create and format limit query (offset, SQL ANSI)
 func LimitOffset(pageNumberStr, pageSizeStr string) (paginatedQuery string, err error) {
-	pageNumber, err := strconv.Atoi(pageNumberStr)
-	if err != nil {
-		return
-	}
-	pageSize, err := strconv.Atoi(pageSizeStr)
-	if err != nil {
-		return
-	}
-	//if pageNumber-1 < 0 {
-		//pageNumber = 1
-	//}
-	paginatedQuery = fmt.Sprintf(pageSize, pageNumber, pageSize)
-	return
+    pageNumber, err := strconv.Atoi(pageNumberStr)
+    if err != nil {
+        return
+    }
+    pageSize, err := strconv.Atoi(pageSizeStr)
+    if err != nil {
+        return
+    }
+    if pageNumber < 0 {
+        pageNumber = 0 // Set page number to 0 if it's less than 0
+    }
+    paginatedQuery = fmt.Sprintf("LIMIT %d OFFSET %d", pageSize, pageNumber*pageSize)
+    return
 }
 
 func (fr *FuncRegistry) limitOffset(pageNumber, pageSize string) (value string) {
