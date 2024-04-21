@@ -69,9 +69,9 @@ func LimitOffset(pageNumberStr, pageSizeStr string) (paginatedQuery string, err 
 	if err != nil {
 		return
 	}
-	if pageNumber-1 < 0 {
-		pageNumber = 1
-	}
+	//if pageNumber-1 < 0 {
+		//pageNumber = 1
+	//}
 	paginatedQuery = fmt.Sprintf("LIMIT %d OFFSET(%d - 1) * %d", pageSize, pageNumber, pageSize)
 	return
 }
